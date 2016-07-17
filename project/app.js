@@ -1,13 +1,8 @@
-var express = require('express');
-var app = express();
+// Importa o módulo do express que foi configurado na pasta config
+var app = require('./config/express')();
 
-app.set('view engine', 'ejs');
-
-app.get('/produtos', function(req, res) {
-    console.log('produtos');
-    res.render('produtos/lista');
-});
-
+// Inicia o servidor na porta informada para escutar as requisições
+// que serão tratadas pelo express
 app.listen(3000, function() {
     console.log('Servidor no ar...')
 });
