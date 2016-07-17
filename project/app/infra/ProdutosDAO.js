@@ -1,10 +1,16 @@
 var ProdutosDAO = function(connection) {
     this._connection = connection;
-}
+};
 
-ProdutosDAO.prototype.lista = function(cb) {
-    this._connection.query('select * from livros', cb);
-}
+ProdutosDAO.prototype.lista = function(callback) {
+    this._connection.query('select * from livros', callback);
+};
+
+ProdutosDAO.prototype.salva = function(produto, callback) {
+    this._connection.query('insert into livros (titulo, descricao, preco) values (?,?,?)', 
+        [produto.titulo, produto.descricao, produto.preco], 
+        callback);
+};
 
 module.exports = function() {
     return ProdutosDAO;

@@ -7,7 +7,8 @@ var connectMYSQL = function() {
             user : 'root',
             password : 'root',
             database : 'casadocodigo',
-            host : 'localhost'
+            host : 'localhost',
+            debug : false
         });
 }
 

@@ -1,0 +1,23 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../bootstrap.css">
+</head>
+<body>
+    <form action="/produtos" method="post">
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-controll " id="titulo" name="titulo" placeholder="Título do livro">
+        </div>
+        <div>
+            <label for="preco">Preço</label>
+            <input type="text" id="preco" name="preco" placeholder="Preço do livro ">
+        </div>
+        <div>
+            <label for="descricao">Descrição</label>
+            <textarea cols="20" rows="20" id="descricao" name="descricao" placeholder="Descrição do livro">
+            </textarea>
+        </div>
+        <input type="submit" value="Gravar"/>        
+    </form>
+</body>
+</html>

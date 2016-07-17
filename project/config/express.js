@@ -1,5 +1,6 @@
 var express = require('express');
 var load = require('express-load');
+var bodyParser = require('body-parser'); 
 
 module.exports = function() {
 
@@ -11,6 +12,8 @@ module.exports = function() {
 
     // Informa ao express qual é o diretório raiz onde estarão as views
     application.set('views', './app/views');
+
+    application.use(bodyParser.urlencoded({extended:true}));
 
     // O express-load, carrega os módulos que estão nos diretórios routes, infra e etc. Esses módulos
     // estão nesses diretórios que estão dentro do diretório app e por isso dissemos ao load a partir
