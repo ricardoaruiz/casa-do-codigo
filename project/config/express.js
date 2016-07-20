@@ -13,7 +13,11 @@ module.exports = function() {
     // Informa ao express qual é o diretório raiz onde estarão as views
     application.set('views', './app/views');
 
+    // Aceita formularios na requisição
     application.use(bodyParser.urlencoded({extended:true}));
+
+    // Aceita JSON na requisição
+    application.use(bodyParser.json());
 
     // O express-load, carrega os módulos que estão nos diretórios routes, infra e etc. Esses módulos
     // estão nesses diretórios que estão dentro do diretório app e por isso dissemos ao load a partir
