@@ -3,18 +3,31 @@
     <link rel="stylesheet" href="../bootstrap.css">
 </head>
 <body>
+    <div class="erros">
+        <% if(errosValidacao) { %>
+            <ul>
+                <% for(var i=0; i<errosValidacao.length; i++) { %>
+                    <li>
+                        <%=errosValidacao[i].param%> - 
+                        <%=errosValidacao[i].msg%>
+                    </li>
+                <%}%>
+            </ul>
+        <%}%>
+    </div>
     <form action="/produtos" method="post">
         <div class="form-group">
             <label for="titulo">Título</label>
-            <input type="text" class="form-controll " id="titulo" name="titulo" placeholder="Título do livro">
+            <input type="text" class="form-controll " id="titulo" name="titulo" value="<%=produto.titulo%>" placeholder="Título do livro">
         </div>
         <div>
             <label for="preco">Preço</label>
-            <input type="text" id="preco" name="preco" placeholder="Preço do livro ">
+            <input type="text" id="preco" name="preco" value="<%=produto.preco%>" placeholder="Preço do livro ">
         </div>
         <div>
             <label for="descricao">Descrição</label>
             <textarea cols="20" rows="20" id="descricao" name="descricao" placeholder="Descrição do livro">
+                <%=produto.descricao%>
             </textarea>
         </div>
         <input type="submit" value="Gravar"/>        
