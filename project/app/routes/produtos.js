@@ -4,7 +4,7 @@
 // carregados em app.
 module.exports = function(app) {
     
-    var fnListaProdutos = function(req, res) {
+    var fnListaProdutos = function(req, res, next) {
         // nesta linha o connectionFactory já está carregado pelo express-load
         // estamos acessando ele a partir da variável app que é quem está com os módulos carregados
         // para acessar os módulos é só seguir o caminho das pastas onde estão a partir da variável
@@ -14,6 +14,9 @@ module.exports = function(app) {
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.lista(function(erros, resultados) {
+            if(erros) {
+                return next(erros);
+            }
             res.format({
                 html : function() {
                     res.render('produtos/lista', {lista:resultados});
