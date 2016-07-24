@@ -19,7 +19,8 @@ module.exports = function() {
     // Informa ao express qual é o diretório raiz onde estarão as views
     application.set('views', './app/views');
 
-    // Aceita formularios na requisição
+    // Aceita formularios na requisição. O extended true é para que ele aceite formulários
+    // complexos com muitos níveis
     application.use(bodyParser.urlencoded({extended:true}));
 
     // Aceita JSON na requisição
@@ -39,6 +40,24 @@ module.exports = function() {
         .then('services')
         .then('routes')
         .into(application);
+
+    // Esse é um middleware para tratar caso o usuário tenha informado uma url não existente
+    // ele funcionará desse forma pois caso o express não encontre a rota pela url o express
+    // passará por esse ponto fazendo o redirecionamento.
+    application.use(function(req, res, next) {
+        res.status(404).render('erros/404');
+    });
+
+    // Esse é um middleware para tratar qualquer erro inesperado. Quando ocorrer um erro não tratado
+    // no decorrer da aplicação o node busca um middleware que tenha na assinatura da função 4 parametros
+    // onde o primeiro são os erros que ocorreram.
+    application.use(function(errors,req, res, next){
+        if(process.env.NODE_ENV == 'production') {
+            res.status(500).render('erros/500');
+            return;
+        }
+        next(errors);
+    });
 
     return application;
 }

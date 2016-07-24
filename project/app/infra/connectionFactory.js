@@ -13,7 +13,7 @@ var connectMYSQL = function() {
         return mysql.createConnection({
                 user : 'root',
                 password : 'root',
-                database : 'casadocodigo',
+                database : 'casadocodigo1',
                 host : 'localhost',
                 debug : false
             });
