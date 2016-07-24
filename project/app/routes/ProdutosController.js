@@ -4,16 +4,11 @@
 // carregados em app.
 module.exports = function(app) {
     
-    var fnListaProdutos = function(req, res, next) {
-        // nesta linha o connectionFactory já está carregado pelo express-load
-        // estamos acessando ele a partir da variável app que é quem está com os módulos carregados
-        // para acessar os módulos é só seguir o caminho das pastas onde estão a partir da variável
-        // app ex: app.infra.connectionFactory();
-        var connection = app.infra.connectionFactory();
-
-        var produtosDAO = new app.infra.ProdutosDAO(connection);
-
-        produtosDAO.lista(function(erros, resultados) {
+    var produtosService = app.services.ProdutosService;
+    
+    // Rota para listagem de produtos
+    app.get('/produtos', function(req, res, next) {
+        produtosService.lista(function(erros, resultados) {
             if(erros) {
                 return next(erros);
             }
@@ -24,14 +19,9 @@ module.exports = function(app) {
                 json : function() {
                     res.json(resultados);
                 }
-            });
+            });            
         });
-
-        connection.end();
-    }; 
-    
-    // Rota para listagem de produtos
-    app.get('/produtos', fnListaProdutos);
+    });
 
     // Rota para o formulário de cadastro de produtos
     app.get('/produtos/form', function(req, res) {
@@ -46,8 +36,24 @@ module.exports = function(app) {
     // Sempre após um post fazer um redirect
     app.post('/produtos', function(req, res) {
 
+        if(!validaFormInclusao(req, res)) {
+            return;
+        }
+
+        produtosService.salva(req.body, function(erros, resultados){
+            res.redirect('/produtos');
+        });           
+
+    });
+
+    // valida o formulário de inclusão de livro utilizando o express-validator
+    var validaFormInclusao = function(req, res) {
+        var toReturn = true;
+
         var produto = req.body;
 
+        // quando inserimos o express-valitor o req ganha diversos métodos de validação
+        // como por exemplo assert().notEmpty();
         req.assert('titulo','Título é obrigatório').notEmpty();
         req.assert('preco','Formato inválido').isFloat();
         
@@ -66,13 +72,10 @@ module.exports = function(app) {
                     res.status(400).json(erros);
                 }
             });
-            return;
+            toReturn = false;
         }
 
-        var connection = app.infra.connectionFactory();
-        var produtosDAO = new app.infra.ProdutosDAO(connection);
-        produtosDAO.salva(produto, function(erros, resultados) {
-            res.redirect('/produtos');
-        });
-    });
+        return toReturn;
+
+    };
 }

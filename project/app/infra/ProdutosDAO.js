@@ -12,6 +12,10 @@ ProdutosDAO.prototype.salva = function(produto, callback) {
         callback);
 };
 
+ProdutosDAO.prototype.buscarPorId = function(id, callback) {
+    this._connection.query('select * from livros where id = ?', [id], callback);
+}
+
 module.exports = function() {
     return ProdutosDAO;
 };

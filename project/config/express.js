@@ -8,6 +8,11 @@ module.exports = function() {
     // Obtem o objeto do express a partir do módulo importado
     var application = express();
 
+    // informa ao express onde estão os arquivos estáticos (js, css e etc).
+    // Essa linha garante que todo arquivo que estiver dentro da pasta public será servido de maneira estática 
+    // sem que precise de uma rota configurada para ele.
+    application.use(express.static('./app/public'));
+
     // Informa ao express qual a engine de view que será utilizada
     application.set('view engine', 'ejs');
 
@@ -31,6 +36,7 @@ module.exports = function() {
     // Outra coisa importante sobre o express-load é que além de ele carregar o módulo (require) ele já
     // invoca a função retornada pelo módulo no mesmo momento.
     load('infra', {cwd : 'app'})
+        .then('services')
         .then('routes')
         .into(application);
 

@@ -1,10 +1,18 @@
+// importando o express nos testes temos acesso a todos os modulos
+// utilizados na aplicação por usar o express-load
 var express = require('../config/express')();
+
+// o supertest usa o express e com isso não é necessario subir um servidor
 var request = require('supertest')(express);
+
+// DatabeseCleaner é um módulo que limpa todas as tabelas do banco
 var DatabaseCleaner = require('database-cleaner');
 var databaseCleaner = new DatabaseCleaner('mysql');
 
 describe('#ProdutosController', function() {
 
+    // beforeEach é uma função do mocha que roda antes de cada teste 'it'
+    // existe também o afterEach
     // done é uma função do mocha que indica que o passo foi finalizado
     beforeEach(function(done) {
         var conn = express.infra.connectionFactory();

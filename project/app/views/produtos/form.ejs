@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link rel="stylesheet" href="../bootstrap.css">
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>   
 </head>
 <body>
     <div class="erros">
@@ -15,22 +15,28 @@
             </ul>
         <%}%>
     </div>
+    <div class="container">
     <form action="/produtos" method="post">
         <div class="form-group">
             <label for="titulo">Título</label>
-            <input type="text" class="form-controll " id="titulo" name="titulo" value="<%=produto.titulo%>" placeholder="Título do livro">
+            <input type="text" class="form-control " id="titulo" name="titulo" value="<%=produto.titulo%>" placeholder="Título do livro">
         </div>
+        
         <div>
             <label for="preco">Preço</label>
-            <input type="text" id="preco" name="preco" value="<%=produto.preco%>" placeholder="Preço do livro ">
+            <input type="text" class="form-control id="preco" name="preco" value="<%=produto.preco%>" placeholder="Preço do livro ">
         </div>
+
         <div>
             <label for="descricao">Descrição</label>
-            <textarea cols="20" rows="20" id="descricao" name="descricao" placeholder="Descrição do livro">
-                <%=produto.descricao%>
+            <textarea cols="20" rows="20" class="form-control id="descricao" name="descricao">
+                <%if(produto.descricao){%>
+                    <%=produto.descricao%>
+                <%}%>
             </textarea>
         </div>
-        <input type="submit" value="Gravar"/>        
+        <input type="submit" class="btn btn-primary" value="Gravar"/>        
     </form>
+    </div>
 </body>
 </html>
